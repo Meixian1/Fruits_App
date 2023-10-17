@@ -6,6 +6,8 @@ const morgan = require('morgan')
 const PORT = 3000;
 const app = express();
 
+const Fruit = require('./models/Fruit.cjs')
+
 // allows us to use process.env (get variables from .env file)
 require('dotenv').config();
 
@@ -42,6 +44,7 @@ app.get('/fruits', (req, res)=>{
 app.post('/fruits', (req, res)=>{
     fruits.push(req.body)    
     console.log(req.body);
+    Fruit.create(fruit)
     res.send("Route is good!")
 })
 
