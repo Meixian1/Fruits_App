@@ -51,6 +51,7 @@ const Fruits = () => {
         <div key={JSON.stringify(fruit)}>
           <p>Name: {fruit.name}</p>
           <p>Color: {fruit.color}</p>
+          <p>Age {fruit.age}</p>
           <p>Ready to Eat: {fruit.readyToEat ? 'True' : 'False'}</p>
         </div>
       ))}

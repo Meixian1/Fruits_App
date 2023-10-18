@@ -1,17 +1,18 @@
 // create schema (breakdown of what our data should look like)... mongoose is a library 
 const mongoose = require('mongoose');
 
-const fruitSchema = new mongoose.Schema(
+const veggieSchema = new mongoose.Schema(
     
 {
     name: {
         type: String,
         require: true
     }, 
-
+    
     color: String, 
     age: Number,
     readyToEat: Boolean,
+    isHealthy: Boolean
 },
 
 {
@@ -26,7 +27,7 @@ const fruitSchema = new mongoose.Schema(
 //User > users
 //Viggie > veggies
 
-const Fruit = mongoose.model("Fruit",             fruitSchema) 
+const Veggie = mongoose.model("Veggie",             veggieSchema) 
 //                        1. ^ which collection   2. ^ the shcema
 
-module.exports = Fruit; 
+module.exports = Veggie; 

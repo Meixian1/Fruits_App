@@ -7,6 +7,7 @@ const PORT = 3000;
 const app = express();
 
 const Fruit = require('./models/Fruit.cjs')
+const Veggie = require('./models/Veggie.cjs')
 
 // allows us to use process.env (get variables from .env file)
 require('dotenv').config();
@@ -36,7 +37,7 @@ app.use(express.json()); // adds .body to the request
 
 // "/"
 // serve the html and js of our react app (dist folder)
-const fruits = []; 
+// const fruits = []; 
 
 // app.get('/fruits', async (req, res)=>{
 //     let fruitsFromDB = await Fruit.find()
@@ -49,6 +50,13 @@ app.get('/fruits', (req, res) => {
     })
 });
 
+app.get('/veggies', async (req, res) => {
+    console.log("hidden route")
+    let veggiesFromDB = await Veggie.find()
+
+    res.send(veggiesFromDB)
+})
+
 app.get("/", (req, res) => {
     res.send("here is your valuable data")
     
@@ -58,6 +66,7 @@ app.post('/fruits', async (req, res) => {
     try {
         console.log(req.body);
         let fruit = req.body;
+        console.log(fruit)
         let responseFromDB = await Fruit.create(fruit);
         console.log(responseFromDB);
         res.send("Route is good!");
@@ -66,6 +75,13 @@ app.post('/fruits', async (req, res) => {
         res.status(500).send("Error while creating the fruit.");
     }
 });
+
+app.post("/veggies", async(req, res)=>{
+    //make Veggie model 
+   let dbResponse = await Veggie.create(req.body);
+   // the created object
+   res.status(201).send(dbResponse)
+})
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
