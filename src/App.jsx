@@ -1,28 +1,26 @@
 import { useState } from 'react'
 import {Routes, Route, Link} from 'react-router-dom'
-import './App.css'
 import Fruits from './Pages/Fruits'
 import CreateFruits from './Pages/CreateFruits'
+import './App.css'
 
 function App() {
 
-  const[fruits, setFruits] = useState([]);
-
   return (
-    <>
+    <div>
     <nav>
       <Link to = "/">
-        Home
+      <button>Home</button>
       </Link>
     <Link to ="/create">
-    Create
+      <button>Create</button>
     </Link>
     </nav>
     <Routes>
-      <Route path='/' element={<Fruits/>} />
-      <Route path='/create' element={<CreateFruits/>} />
+      <Route path='/' element={<Fruits/>}/>
+      <Route path='/create' element={<CreateFruits/>}/>
     </Routes>
-    </>
+    </div>
   )
 }
 

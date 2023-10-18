@@ -26,8 +26,9 @@ const middleware = (req, res, next) => {
 }
 
 
-app.use(morgan('dev'))
+app.use(morgan('dev'))  //app.use is used to help set up the middleware
 
+app.use(express.static(path.join(__dirname, 'dist'))); //double underscores
 
 app.use(middleware);
 
@@ -37,22 +38,34 @@ app.use(express.json()); // adds .body to the request
 // serve the html and js of our react app (dist folder)
 const fruits = []; 
 
-app.get('/fruits', (req, res)=>{
-    res.send(fruits)
-})
+// app.get('/fruits', async (req, res)=>{
+//     let fruitsFromDB = await Fruit.find()
+//     res.send(fruitsFromDB);
+// })
 
-app.post('/fruits', (req, res)=>{
-    fruits.push(req.body)    
-    console.log(req.body);
-    Fruit.create(fruit)
-    res.send("Route is good!")
-})
+app.get('/fruits', (req, res) => {
+    Fruit.find().then((fruitsFromDB) =>{
+        res.send(fruitsFromDB);
+    })
+});
 
 app.get("/", (req, res) => {
     res.send("here is your valuable data")
     
 })
 
+app.post('/fruits', async (req, res) => {
+    try {
+        console.log(req.body);
+        let fruit = req.body;
+        let responseFromDB = await Fruit.create(fruit);
+        console.log(responseFromDB);
+        res.send("Route is good!");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error while creating the fruit.");
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
